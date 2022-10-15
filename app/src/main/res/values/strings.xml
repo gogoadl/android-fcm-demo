@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">android-fcm-demo</string>
+    <string name="fcm_message">fcm 메세지 테스트 입니다</string>
+    <string name="default_notification_channel_id">default channel id</string>
 </resources>
