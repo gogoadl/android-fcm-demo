@@ -1,20 +1,33 @@
 package com.hyeonwoo.android_fcm_demo
 
 import android.Manifest
+import android.app.ActivityManager
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.pm.PackageManager
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.messaging.ktx.messaging
+
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        val activityManager = getSystemService(ACTIVITY_SERVICE) as ActivityManager
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+            Log.d(
+                "TEST",
+                "onCreate: activityManager.isBackgroundRestricted() = " + activityManager.isBackgroundRestricted
+            )
+        }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             // Create channel to show notifications.
@@ -26,6 +39,16 @@ class MainActivity : AppCompatActivity() {
                 channelName, NotificationManager.IMPORTANCE_LOW)
             )
         }
+
+        Firebase.messaging.subscribeToTopic("weather")
+            .addOnCompleteListener { task ->
+                var msg = "Subscribed"
+                if (!task.isSuccessful) {
+                    msg = "Subscribe failed"
+                }
+                Log.d("TAG", msg)
+                Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT).show()
+            }
 
         // If a notification message is tapped, any data accompanying the notification
         // message is available in the intent extras. In this sample the launcher
@@ -76,4 +99,5 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
+
 }
