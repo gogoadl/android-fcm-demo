@@ -36,7 +36,7 @@ class MainActivity : AppCompatActivity() {
             val notificationManager = getSystemService(NotificationManager::class.java)
             notificationManager?.createNotificationChannel(
                 NotificationChannel(channelId,
-                channelName, NotificationManager.IMPORTANCE_LOW)
+                channelName, NotificationManager.IMPORTANCE_HIGH)
             )
         }
 
