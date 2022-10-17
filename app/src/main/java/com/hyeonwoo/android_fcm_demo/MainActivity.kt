@@ -31,16 +31,18 @@ class MainActivity : AppCompatActivity() {
                 channelName, NotificationManager.IMPORTANCE_HIGH)
             )
         }
-
-        Firebase.messaging.subscribeToTopic("weather")
-            .addOnCompleteListener { task ->
-                var msg = "Subscribed"
-                if (!task.isSuccessful) {
-                    msg = "Subscribe failed"
-                }
-                Log.d("TAG", msg)
-                Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT).show()
-            }
+        // Server측에서 특정 기기 또는 topic에 메세지를 전송할 경우 사용되는 것으로 보임.
+        // https://firebase.google.com/docs/cloud-messaging/send-message?hl=ko#java
+        
+//        Firebase.messaging.subscribeToTopic("weather")
+//            .addOnCompleteListener { task ->
+//                var msg = "Subscribed"
+//                if (!task.isSuccessful) {
+//                    msg = "Subscribe failed"
+//                }
+//                Log.d("TAG", msg)
+//                Toast.makeText(baseContext, msg, Toast.LENGTH_SHORT).show()
+//            }
 
         // If a notification message is tapped, any data accompanying the notification
         // message is available in the intent extras. In this sample the launcher
